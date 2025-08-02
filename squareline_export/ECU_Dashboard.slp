@@ -1,0 +1,497 @@
+{
+  "version": "1.3.4",
+  "squareline_version": "1.3.4",
+  "name": "ECU_Dashboard",
+  "description": "Automotive ECU Dashboard with real-time gauges",
+  "project_settings": {
+    "mcu": "ESP32S3",
+    "resolution": {
+      "width": 800,
+      "height": 480
+    },
+    "color_depth": "16SW",
+    "lvgl_version": "8.3.0",
+    "orientation": "Landscape",
+    "ui_theme": "automotive_dark"
+  },
+  "canvas": {
+    "width": 800,
+    "height": 480,
+    "zoom": 1.0,
+    "grid_enabled": true,
+    "snap_to_grid": true
+  },
+  "screens": [
+    {
+      "name": "MainScreen",
+      "type": "lv_obj",
+      "is_default": true,
+      "properties": {
+        "width": 800,
+        "height": 480,
+        "bg_color": "#0A0A0A",
+        "bg_opa": 255,
+        "scrollable": false
+      },
+      "children": [
+        {
+          "name": "HeaderPanel",
+          "type": "lv_obj",
+          "x": 0,
+          "y": 0,
+          "width": 800,
+          "height": 60,
+          "align": "TOP_LEFT",
+          "properties": {
+            "bg_color": "#1A1A1A",
+            "border_width": 1,
+            "border_color": "#333333",
+            "border_opa": 255,
+            "scrollable": false
+          },
+          "children": [
+            {
+              "name": "TitleLabel",
+              "type": "lv_label",
+              "x": 20,
+              "y": 0,
+              "width": "LV_SIZE_CONTENT",
+              "height": "LV_SIZE_CONTENT",
+              "align": "LEFT_MID",
+              "properties": {
+                "text": "Turbo Control Dashboard",
+                "text_color": "#FFFFFF",
+                "text_font": "montserrat_24"
+              }
+            },
+            {
+              "name": "ConnectionStatus",
+              "type": "lv_label",
+              "x": -20,
+              "y": 0,
+              "width": "LV_SIZE_CONTENT",
+              "height": "LV_SIZE_CONTENT",
+              "align": "RIGHT_MID",
+              "properties": {
+                "text": "Disconnected",
+                "text_color": "#FF3366",
+                "text_font": "montserrat_16"
+              }
+            }
+          ]
+        },
+        {
+          "name": "MapGauge",
+          "type": "lv_arc",
+          "x": 140,
+          "y": 150,
+          "width": 200,
+          "height": 200,
+          "align": "TOP_LEFT",
+          "properties": {
+            "bg_start_angle": 135,
+            "bg_end_angle": 45,
+            "range_min": 100,
+            "range_max": 250,
+            "value": 150,
+            "arc_color": "#00D4FF",
+            "arc_width": 8,
+            "bg_arc_color": "#333333",
+            "bg_arc_width": 8,
+            "knob_type": "none"
+          },
+          "children": [
+            {
+              "name": "MapTitle",
+              "type": "lv_label",
+              "x": 0,
+              "y": -40,
+              "align": "CENTER",
+              "properties": {
+                "text": "MAP",
+                "text_color": "#FFFFFF",
+                "text_font": "montserrat_16"
+              }
+            },
+            {
+              "name": "MapValue",
+              "type": "lv_label",
+              "x": 0,
+              "y": 0,
+              "align": "CENTER",
+              "properties": {
+                "text": "150",
+                "text_color": "#00D4FF",
+                "text_font": "montserrat_32"
+              }
+            },
+            {
+              "name": "MapUnit",
+              "type": "lv_label",
+              "x": 0,
+              "y": 30,
+              "align": "CENTER",
+              "properties": {
+                "text": "kPa",
+                "text_color": "#888888",
+                "text_font": "montserrat_14"
+              }
+            }
+          ]
+        },
+        {
+          "name": "WastegateGauge",
+          "type": "lv_arc",
+          "x": 400,
+          "y": 150,
+          "width": 200,
+          "height": 200,
+          "align": "TOP_LEFT",
+          "properties": {
+            "bg_start_angle": 135,
+            "bg_end_angle": 45,
+            "range_min": 0,
+            "range_max": 100,
+            "value": 45,
+            "arc_color": "#00FF88",
+            "arc_width": 8,
+            "bg_arc_color": "#333333",
+            "bg_arc_width": 8,
+            "knob_type": "none"
+          },
+          "children": [
+            {
+              "name": "WastegateTitle",
+              "type": "lv_label",
+              "x": 0,
+              "y": -40,
+              "align": "CENTER",
+              "properties": {
+                "text": "Wastegate",
+                "text_color": "#FFFFFF",
+                "text_font": "montserrat_16"
+              }
+            },
+            {
+              "name": "WastegateValue",
+              "type": "lv_label",
+              "x": 0,
+              "y": 0,
+              "align": "CENTER",
+              "properties": {
+                "text": "45",
+                "text_color": "#00FF88",
+                "text_font": "montserrat_32"
+              }
+            },
+            {
+              "name": "WastegateUnit",
+              "type": "lv_label",
+              "x": 0,
+              "y": 30,
+              "align": "CENTER",
+              "properties": {
+                "text": "%",
+                "text_color": "#888888",
+                "text_font": "montserrat_14"
+              }
+            }
+          ]
+        },
+        {
+          "name": "TpsGauge",
+          "type": "lv_arc",
+          "x": 660,
+          "y": 150,
+          "width": 200,
+          "height": 200,
+          "align": "TOP_LEFT",
+          "properties": {
+            "bg_start_angle": 135,
+            "bg_end_angle": 45,
+            "range_min": 0,
+            "range_max": 100,
+            "value": 68,
+            "arc_color": "#FFD700",
+            "arc_width": 8,
+            "bg_arc_color": "#333333",
+            "bg_arc_width": 8,
+            "knob_type": "none"
+          },
+          "children": [
+            {
+              "name": "TpsTitle",
+              "type": "lv_label",
+              "x": 0,
+              "y": -40,
+              "align": "CENTER",
+              "properties": {
+                "text": "TPS",
+                "text_color": "#FFFFFF",
+                "text_font": "montserrat_16"
+              }
+            },
+            {
+              "name": "TpsValue",
+              "type": "lv_label",
+              "x": 0,
+              "y": 0,
+              "align": "CENTER",
+              "properties": {
+                "text": "68",
+                "text_color": "#FFD700",
+                "text_font": "montserrat_32"
+              }
+            },
+            {
+              "name": "TpsUnit",
+              "type": "lv_label",
+              "x": 0,
+              "y": 30,
+              "align": "CENTER",
+              "properties": {
+                "text": "%",
+                "text_color": "#888888",
+                "text_font": "montserrat_14"
+              }
+            }
+          ]
+        },
+        {
+          "name": "RpmGauge",
+          "type": "lv_arc",
+          "x": 140,
+          "y": 380,
+          "width": 200,
+          "height": 200,
+          "align": "TOP_LEFT",
+          "properties": {
+            "bg_start_angle": 135,
+            "bg_end_angle": 45,
+            "range_min": 0,
+            "range_max": 7000,
+            "value": 3500,
+            "arc_color": "#FF6B35",
+            "arc_width": 8,
+            "bg_arc_color": "#333333",
+            "bg_arc_width": 8,
+            "knob_type": "none"
+          },
+          "children": [
+            {
+              "name": "RpmTitle",
+              "type": "lv_label",
+              "x": 0,
+              "y": -40,
+              "align": "CENTER",
+              "properties": {
+                "text": "RPM",
+                "text_color": "#FFFFFF",
+                "text_font": "montserrat_16"
+              }
+            },
+            {
+              "name": "RpmValue",
+              "type": "lv_label",
+              "x": 0,
+              "y": 0,
+              "align": "CENTER",
+              "properties": {
+                "text": "3500",
+                "text_color": "#FF6B35",
+                "text_font": "montserrat_32"
+              }
+            },
+            {
+              "name": "RpmUnit",
+              "type": "lv_label",
+              "x": 0,
+              "y": 30,
+              "align": "CENTER",
+              "properties": {
+                "text": "RPM",
+                "text_color": "#888888",
+                "text_font": "montserrat_14"
+              }
+            }
+          ]
+        },
+        {
+          "name": "TargetGauge",
+          "type": "lv_arc",
+          "x": 400,
+          "y": 380,
+          "width": 200,
+          "height": 200,
+          "align": "TOP_LEFT",
+          "properties": {
+            "bg_start_angle": 135,
+            "bg_end_angle": 45,
+            "range_min": 100,
+            "range_max": 250,
+            "value": 180,
+            "arc_color": "#FFD700",
+            "arc_width": 8,
+            "bg_arc_color": "#333333",
+            "bg_arc_width": 8,
+            "knob_type": "none"
+          },
+          "children": [
+            {
+              "name": "TargetTitle",
+              "type": "lv_label",
+              "x": 0,
+              "y": -40,
+              "align": "CENTER",
+              "properties": {
+                "text": "Target",
+                "text_color": "#FFFFFF",
+                "text_font": "montserrat_16"
+              }
+            },
+            {
+              "name": "TargetValue",
+              "type": "lv_label",
+              "x": 0,
+              "y": 0,
+              "align": "CENTER",
+              "properties": {
+                "text": "180",
+                "text_color": "#FFD700",
+                "text_font": "montserrat_32"
+              }
+            },
+            {
+              "name": "TargetUnit",
+              "type": "lv_label",
+              "x": 0,
+              "y": 30,
+              "align": "CENTER",
+              "properties": {
+                "text": "kPa",
+                "text_color": "#888888",
+                "text_font": "montserrat_14"
+              }
+            }
+          ]
+        },
+        {
+          "name": "TcuPanel",
+          "type": "lv_obj",
+          "x": 660,
+          "y": 380,
+          "width": 200,
+          "height": 200,
+          "align": "TOP_LEFT",
+          "properties": {
+            "bg_color": "#1A1A1A",
+            "border_width": 2,
+            "border_color": "#00FF88",
+            "border_opa": 255,
+            "radius": 15,
+            "scrollable": false
+          },
+          "children": [
+            {
+              "name": "TcuTitle",
+              "type": "lv_label",
+              "x": 0,
+              "y": -40,
+              "align": "CENTER",
+              "properties": {
+                "text": "TCU Status",
+                "text_color": "#FFFFFF",
+                "text_font": "montserrat_16"
+              }
+            },
+            {
+              "name": "TcuStatus",
+              "type": "lv_label",
+              "x": 0,
+              "y": 0,
+              "align": "CENTER",
+              "properties": {
+                "text": "Normal",
+                "text_color": "#00FF88",
+                "text_font": "montserrat_24"
+              }
+            },
+            {
+              "name": "TcuIndicator",
+              "type": "lv_obj",
+              "x": 0,
+              "y": 40,
+              "width": 20,
+              "height": 20,
+              "align": "CENTER",
+              "properties": {
+                "bg_color": "#00FF88",
+                "border_width": 0,
+                "radius": 10
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "assets": {
+    "fonts": [
+      {
+        "name": "montserrat_14",
+        "size": 14,
+        "family": "Montserrat"
+      },
+      {
+        "name": "montserrat_16", 
+        "size": 16,
+        "family": "Montserrat"
+      },
+      {
+        "name": "montserrat_24",
+        "size": 24,
+        "family": "Montserrat"
+      },
+      {
+        "name": "montserrat_32",
+        "size": 32,
+        "family": "Montserrat"
+      }
+    ],
+    "images": [],
+    "color_palette": {
+      "background": "#0A0A0A",
+      "card": "#1A1A1A",
+      "text_primary": "#FFFFFF",
+      "text_secondary": "#888888",
+      "border": "#333333",
+      "map_color": "#00D4FF",
+      "wastegate_color": "#00FF88", 
+      "tps_color": "#FFD700",
+      "rpm_color": "#FF6B35",
+      "target_color": "#FFD700",
+      "success": "#00FF88",
+      "warning": "#FF6B35",
+      "danger": "#FF3366"
+    }
+  },
+  "export_settings": {
+    "ui_export_path": "./ui",
+    "template": "Arduino_ESP32",
+    "flat_export": false,
+    "lock_export": false,
+    "export_images_separately": true,
+    "generate_makefile": true
+  },
+  "lvgl_config": {
+    "LV_COLOR_DEPTH": "16",
+    "LV_DPI": "130",
+    "LV_USE_PERF_MONITOR": "1",
+    "LV_USE_MEM_MONITOR": "1",
+    "LV_USE_THEME_DEFAULT": "1",
+    "LV_FONT_MONTSERRAT_14": "1",
+    "LV_FONT_MONTSERRAT_16": "1",
+    "LV_FONT_MONTSERRAT_24": "1",
+    "LV_FONT_MONTSERRAT_32": "1"
+  }
+}

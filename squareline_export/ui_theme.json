@@ -1,0 +1,66 @@
+{
+  "theme": {
+    "name": "ECU_Dashboard_Dark",
+    "description": "Dark theme for automotive ECU dashboard",
+    "colors": {
+      "background": "#0A0A0A",
+      "card_background": "#1A1A1A",
+      "text_primary": "#FFFFFF",
+      "text_secondary": "#A0A0A0",
+      "text_muted": "#666666",
+      "accent_primary": "#00D4FF",
+      "accent_secondary": "#0099CC",
+      "success": "#00FF88",
+      "warning": "#FF6B35",
+      "danger": "#FF3366",
+      "yellow": "#FFD700",
+      "border": "#333333"
+    },
+    "fonts": {
+      "header": {
+        "family": "Orbitron",
+        "weight": "Bold",
+        "size": 24
+      },
+      "gauge_value": {
+        "family": "Orbitron",
+        "weight": "Regular",
+        "size": 36
+      },
+      "label": {
+        "family": "Inter",
+        "weight": "Regular",
+        "size": 14
+      },
+      "small_text": {
+        "family": "Inter",
+        "weight": "Regular",
+        "size": 12
+      }
+    },
+    "gauge_styles": {
+      "arc_width": 8,
+      "arc_radius": 70,
+      "tick_count": 10,
+      "animation_duration": 200
+    },
+    "screen_sizes": {
+      "small": {
+        "width": 480,
+        "height": 320
+      },
+      "medium": {
+        "width": 800,
+        "height": 480
+      },
+      "large": {
+        "width": 1024,
+        "height": 600
+      },
+      "xlarge": {
+        "width": 1280,
+        "height": 720
+      }
+    }
+  }
+}

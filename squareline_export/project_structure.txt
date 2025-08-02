@@ -1,0 +1,109 @@
+ECU Dashboard SquareLine Studio Export
+=====================================
+
+Directory Structure:
+squareline_export/
+├── README_SQUARELINE.md           # Detailed instructions for SquareLine Studio
+├── ui_theme.json                  # Color scheme and theme configuration
+├── ecu_data_structures.h          # Core data structures for ECU dashboard
+├── ui_screens.c                   # LVGL screen implementations
+├── ui_events.c                    # Event handlers and UI logic
+├── ui.h                           # Header file with all UI declarations
+├── ecu_can_integration.c          # CAN bus message parsing
+├── ecu_can_integration.h          # CAN integration header
+├── main_integration_example.c     # Complete integration example
+└── project_structure.txt          # This file
+
+Key Features Exported:
+======================
+
+1. GAUGE DISPLAY SYSTEM
+   - MAP Pressure (100-250 kPa)
+   - Wastegate Position (0-100%)
+   - TPS Position (0-100%)
+   - Engine RPM (0-7000 RPM)
+   - Target Boost (100-250 kPa)
+   - TCU Status Panel
+
+2. DISPLAY CONFIGURATIONS
+   - 4 size options: Small (150px), Medium (200px), Large (280px), XLarge (350px)
+   - 1-6 columns grid layout
+   - 3 gauge styles: Circular arc, Half arc, Linear bar
+   - Compact mode and visibility toggles
+
+3. REAL-TIME DATA PROCESSING
+   - CAN ID 0x440: TCU data (torque request, protection status)
+   - CAN ID 0x380: ECU data (RPM, MAP, TPS)
+   - CAN ID 0x200: Boost control data (wastegate, target boost)
+   - 20Hz update rate (50ms intervals)
+
+4. AUTOMOTIVE COLOR SCHEME
+   - Background: #0A0A0A (Dark automotive theme)
+   - Gauges: Blue (#00D4FF), Green (#00FF88), Yellow (#FFD700), Orange (#FF6B35)
+   - Alerts: Warning (#FF6B35), Danger (#FF3366), Success (#00FF88)
+
+5. THRESHOLD MONITORING
+   - MAP pressure warnings at 230 kPa, danger at 245 kPa
+   - RPM warnings at 6000, danger at 6500
+   - TCU protection and limp mode detection
+   - Audio and visual alerts system
+
+Implementation Steps for SquareLine Studio:
+==========================================
+
+1. CREATE NEW PROJECT
+   - Set display resolution (recommended: 800x480)
+   - Choose dark theme as base
+   - Import Orbitron font for automotive styling
+
+2. IMPORT SCREENS
+   - Copy ui_screens.c content as base for screen design
+   - Create MainScreen with header, gauge grid, status panels
+   - Create SettingsScreen for configuration options
+
+3. CONFIGURE COMPONENTS
+   - Set up Arc widgets for circular gauges
+   - Configure Bar widgets for linear gauges
+   - Add Labels for value displays
+   - Set up Sliders for settings adjustment
+
+4. APPLY STYLING
+   - Import colors from ui_theme.json
+   - Set gauge arc widths and angles
+   - Configure fonts: Orbitron for values, Inter for labels
+   - Apply rounded corners and shadows
+
+5. IMPLEMENT EVENTS
+   - Copy event handlers from ui_events.c
+   - Set up timer for 50ms updates
+   - Add button callbacks for navigation
+   - Implement smooth animations
+
+6. INTEGRATE CAN DATA
+   - Copy CAN parsing code from ecu_can_integration.c
+   - Set up periodic data updates
+   - Implement timeout detection
+   - Add data validation
+
+7. EXPORT AND COMPILE
+   - Generate C code from SquareLine Studio
+   - Include ecu_data_structures.h in your project
+   - Link with LVGL library
+   - Add CAN driver for your microcontroller
+
+Hardware Requirements:
+=====================
+- Microcontroller with CAN interface (ESP32, STM32, etc.)
+- Display with LVGL support (TFT LCD, OLED)
+- CAN transceiver (MCP2515, TJA1050, etc.)
+- Minimum 32KB RAM, 256KB Flash
+- Real-time OS recommended for stable 20Hz updates
+
+CAN Bus Configuration:
+=====================
+- Baud rate: 500 kbps (standard automotive)
+- Message filters for IDs: 0x440, 0x380, 0x200
+- Little-endian byte order
+- Error handling with bus-off recovery
+
+This export provides a complete foundation for creating a professional ECU dashboard in SquareLine Studio with full CAN bus integration and automotive-grade styling.
