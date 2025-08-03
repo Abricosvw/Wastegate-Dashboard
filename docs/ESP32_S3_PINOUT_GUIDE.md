@@ -1,55 +1,57 @@
 # ESP32-S3-Touch-LCD-7 Распиновка и Подключение
 
-## 🖥️ Экран ST7262 RGB LCD (800x480)
+## 🖥️ Экран ST7262 RGB LCD (800x480) - ОБНОВЛЕНО
 
 ### RGB Интерфейс (16-bit данных):
 ```
-DATA PINS:
-GPIO8  → LCD_D0   (Red 0)
-GPIO3  → LCD_D1   (Red 1) 
-GPIO46 → LCD_D2   (Red 2)
-GPIO9  → LCD_D3   (Red 3)
-GPIO1  → LCD_D4   (Red 4)
+// B (Blue)
+GPIO14 → LCD_D0   (Blue 3)
+GPIO38 → LCD_D1   (Blue 4)
+GPIO18 → LCD_D2   (Blue 5)
+GPIO17 → LCD_D3   (Blue 6)
+GPIO10 → LCD_D4   (Blue 7)
 
-GPIO5  → LCD_D5   (Green 0)
-GPIO6  → LCD_D6   (Green 1)
-GPIO7  → LCD_D7   (Green 2)
-GPIO15 → LCD_D8   (Green 3)
-GPIO16 → LCD_D9   (Green 4)
-GPIO4  → LCD_D10  (Green 5)
+// G (Green)
+GPIO39 → LCD_D5   (Green 2)
+GPIO0  → LCD_D6   (Green 3)
+GPIO45 → LCD_D7   (Green 4)
+GPIO48 → LCD_D8   (Green 5)
+GPIO47 → LCD_D9   (Green 6)
+GPIO21 → LCD_D10  (Green 7)
 
-GPIO45 → LCD_D11  (Blue 0)
-GPIO48 → LCD_D12  (Blue 1)
-GPIO47 → LCD_D13  (Blue 2)
-GPIO21 → LCD_D14  (Blue 3)
-GPIO14 → LCD_D15  (Blue 4)
+// R (Red)
+GPIO1  → LCD_D11  (Red 3)
+GPIO2  → LCD_D12  (Red 4)
+GPIO42 → LCD_D13  (Red 5)
+GPIO41 → LCD_D14  (Red 6)
+GPIO40 → LCD_D15  (Red 7)
 ```
 
 ### Управляющие сигналы:
 ```
-GPIO40 → LCD_CLK    (Pixel Clock)
-GPIO41 → LCD_CAM_D+ (HSYNC)
-GPIO39 → LCD_CAM_D- (VSYNC)  
-GPIO42 → LCD_DISP   (Display Enable)
+GPIO7  → LCD_PCLK   (Pixel Clock)
+GPIO46 → HSYNC
+GPIO3  → VSYNC
+GPIO5  → DE         (Display Enable)
 ```
 
 ### Питание и подсветка:
 ```
 3.3V   → LCD_VDD
 GND    → LCD_GND
-GPIO2  → LCD_BLK (Backlight Control)
+-1     → LCD_BLK (Backlight Control - не используется)
 ```
 
 ---
 
-## 👆 Тачскрин GT911 (I2C)
+## 👆 Тачскрин GT911 (I2C) - ОБНОВЛЕНО
 
 ### I2C интерфейс:
 ```
-GPIO19 → GT911_SDA  (I2C Data)
-GPIO20 → GT911_SCL  (I2C Clock)
-GPIO38 → GT911_INT  (Interrupt)
-GPIO18 → GT911_RST  (Reset)
+GPIO8  → I2C_SDA (I2C Data)
+GPIO9  → I2C_SCL (I2C Clock)
+-1     → GT911_INT (Interrupt - не используется)
+-1     → GT911_RST (Reset - не используется)
 ```
 
 ### Питание:
@@ -59,8 +61,7 @@ GND  → GT911_GND
 ```
 
 ### I2C адрес:
-- **0x5D** (по умолчанию)
-- **0x14** (альтернативный)
+- **0x5D** или **0x14** (зависит от конфигурации)
 
 ---
 
@@ -89,8 +90,8 @@ CAN_L  → CAN Bus Low
 
 ### I2C интерфейс:
 ```
-GPIO19 → CH422G_SDA  (Shared with GT911)
-GPIO20 → CH422G_SCL  (Shared with GT911)
+GPIO8 → CH422G_SDA  (Shared with GT911)
+GPIO9 → CH422G_SCL  (Shared with GT911)
 ```
 
 ### I2C адрес:
@@ -170,46 +171,40 @@ CONFIG_FREERTOS_USE_TRACE_FACILITY=y
 
 ---
 
-## 🔧 Инициализация в коде
+## 🔧 Инициализация в коде - ОБНОВЛЕНО
 
 ### LCD RGB инициализация:
 ```c
 esp_lcd_rgb_panel_config_t panel_config = {
     .data_width = 16,
-    .bits_per_pixel = 16,
-    .de_gpio_num = 42,
-    .pclk_gpio_num = 40,
-    .vsync_gpio_num = 39,
-    .hsync_gpio_num = 41,
+    .pclk_hz = 18 * 1000 * 1000,
+    .h_res = 800,
+    .v_res = 480,
+    .hsync_gpio_num = 46,
+    .vsync_gpio_num = 3,
+    .de_gpio_num = 5,
+    .pclk_gpio_num = 7,
     .data_gpio_nums = {
-        8, 3, 46, 9, 1,     // R0-R4
-        5, 6, 7, 15, 16, 4, // G0-G5  
-        45, 48, 47, 21, 14  // B0-B4
+        14, 38, 18, 17, 10, // B3-B7
+        39, 0, 45, 48, 47, 21, // G2-G7
+        1, 2, 42, 41, 40,    // R3-R7
     },
-    .timings = {
-        .pclk_hz = 16000000,
-        .h_res = 800,
-        .v_res = 480,
-        .hsync_front_porch = 8,
-        .hsync_back_porch = 8,
-        .hsync_pulse_width = 4,
-        .vsync_front_porch = 8,
-        .vsync_back_porch = 8,
-        .vsync_pulse_width = 4,
-    }
+    // ... другие параметры ...
 };
 ```
 
-### GT911 Touch инициализация:
+### GT911 Touch инициализация (через общую I2C):
 ```c
-i2c_config_t i2c_config = {
+i2c_config_t i2c_conf = {
     .mode = I2C_MODE_MASTER,
-    .sda_io_num = 19,
-    .scl_io_num = 20,
+    .sda_io_num = 8,
+    .scl_io_num = 9,
     .sda_pullup_en = GPIO_PULLUP_ENABLE,
     .scl_pullup_en = GPIO_PULLUP_ENABLE,
-    .master.clk_speed = 400000
+    .master.clk_speed = 400000,
 };
+i2c_param_config(I2C_MASTER_NUM, &i2c_conf);
+i2c_driver_install(I2C_MASTER_NUM, i2c_conf.mode, 0, 0, 0);
 ```
 
 ### TWAI (CAN) инициализация:
