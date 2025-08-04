@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ECU Dashboard</string>
+    
+    <!-- Connection Screen -->
+    <string name="connect_to_esp32">Connect to ESP32 CAN Interface</string>
+    <string name="connection_type">Connection Type</string>
+    <string name="wifi">WiFi</string>
+    <string name="bluetooth">Bluetooth</string>
+    <string name="esp32_wifi_settings">ESP32 WiFi Settings</string>
+    <string name="ip_address">IP Address</string>
+    <string name="port">Port</string>
+    <string name="connect">Connect</string>
+    <string name="demo_mode">Demo Mode (No ESP32)</string>
+    
+    <!-- Dashboard Screen -->
+    <string name="dashboard_title">ECU Dashboard</string>
+    <string name="connection_status">Connection Status</string>
+    <string name="last_update">Last Update</string>
+    <string name="settings">Settings</string>
+    <string name="disconnect">Disconnect</string>
+    
+    <!-- Gauge Labels -->
+    <string name="map_pressure">MAP Pressure</string>
+    <string name="wastegate">Wastegate</string>
+    <string name="tps">TPS</string>
+    <string name="engine_rpm">Engine RPM</string>
+    <string name="target_boost">Target Boost</string>
+    <string name="tcu_status">TCU Status</string>
+    <string name="transmission_control">Transmission Control</string>
+    
+    <!-- TCU Status -->
+    <string name="tcu_ok">TCU OK</string>
+    <string name="tcu_warn">TCU WARN</string>
+    <string name="tcu_error">TCU ERROR</string>
+    <string name="unknown">UNKNOWN</string>
+    
+    <!-- Settings Screen -->
+    <string name="connection_settings">Connection</string>
+    <string name="display_settings">Display</string>
+    <string name="about">About</string>
+    <string name="update_rate">Update Rate</string>
+    <string name="auto_reconnect">Auto Reconnect</string>
+    <string name="auto_reconnect_desc">Automatically reconnect when connection is lost</string>
+    <string name="show_warnings">Show Warnings</string>
+    <string name="show_warnings_desc">Display warning indicators on gauges</string>
+    <string name="sound_alerts">Sound Alerts</string>
+    <string name="sound_alerts_desc">Play sound for critical alerts</string>
+    <string name="app_version">Version 1.0.0</string>
+    <string name="app_description">Real-time CAN bus monitoring for ESP32</string>
+    
+    <!-- Units -->
+    <string name="unit_kpa">kPa</string>
+    <string name="unit_percent">%</string>
+    <string name="unit_rpm">RPM</string>
+    <string name="unit_hz">Hz</string>
+    
+    <!-- Error Messages -->
+    <string name="connection_failed">Connection failed</string>
+    <string name="cannot_reach_esp32">Cannot reach ESP32. Check WiFi connection.</string>
+    <string name="bluetooth_not_implemented">Bluetooth connection not yet implemented</string>
+    <string name="websocket_error">WebSocket connection failed</string>
+    <string name="parse_error">Failed to parse CAN data</string>
+    
+    <!-- Status Messages -->
+    <string name="connected">Connected</string>
+    <string name="connecting">Connecting...</string>
+    <string name="disconnected">Disconnected</string>
+    <string name="demo_mode_status">Demo Mode</string>
+    <string name="simulating">Simulating</string>
+    <string name="error">Error</string>
+    <string name="now">Now</string>
+    <string name="seconds_ago">%ds ago</string>
+    <string name="offline">Offline</string>
+</resources>
